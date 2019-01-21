@@ -15,4 +15,4 @@ RUN mix local.hex --force && \
 
 ENV PORT 4000 
 
-CMD ["iex","--sname","--cookie","secret_cookie","counter","-S","mix"]
+CMD ["iex","--sname","counter","--cookie","secret_cookie","-S","mix"]
