@@ -1,0 +1,2 @@
+defmodule HttpCounter do
+end
