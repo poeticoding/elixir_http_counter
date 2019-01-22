@@ -5,7 +5,8 @@ defmodule HttpCounter.Counter do
     GenServer.start_link __MODULE__, :ok, name: via(name)
   end
 
-  def via(name), do: {:via, Registry, {Registry.Counter, name}}
+  def via(name),
+    do: {:via, Registry, {Registry.Counter, name}}
 
   def init(:ok), do: {:ok, 0}
 
