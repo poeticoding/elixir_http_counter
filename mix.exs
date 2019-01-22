@@ -23,7 +23,8 @@ defmodule HttpCounter.MixProject do
   defp deps do
     [
       {:plug, "~> 1.7"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:libcluster, "~> 3.0"}
     ]
   end
 end

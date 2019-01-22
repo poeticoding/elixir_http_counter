@@ -8,9 +8,16 @@ defmodule HttpCounter.Application do
   def http_port do
     (System.get_env("PORT") || "4000")|> String.to_integer()
   end
+
   def start(_type, _args) do
-    # List all child processes to be supervised
+    topologies = [
+      local_topology: [
+        strategy: Cluster.Strategy.Epmd,
+        config: [hosts: [:"n1@127.0.0.1", :"n2@127.0.0.1"]]
+      ]
+    ]
     children = [
+      {Cluster.Supervisor, [topologies, [name: HttpCounter.ClusterSupervisor]]},
       Plug.Cowboy.child_spec(scheme: :http, plug: HttpCounter.Router, options: [port: http_port()])
     ]
 
