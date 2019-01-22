@@ -6,12 +6,11 @@ defmodule HttpCounter.Application do
   use Application
 
   def http_port do
-    System.get_env("PORT") |> String.to_integer()
+    (System.get_env("PORT") || "4000")|> String.to_integer()
   end
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      {Registry, [keys: :unique, name: Registry.Counter]},
       Plug.Cowboy.child_spec(scheme: :http, plug: HttpCounter.Router, options: [port: http_port()])
     ]
 

@@ -6,7 +6,7 @@ defmodule HttpCounter.Counter do
   end
 
   def via(name),
-    do: {:via, Registry, {Registry.Counter, name}}
+    do: {:global, name}
 
   def init(:ok), do: {:ok, 0}
 
