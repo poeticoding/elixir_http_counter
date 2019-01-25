@@ -2,21 +2,17 @@ defmodule HttpCounter.Counter do
   use GenServer
 
   def start_link(name) do
-    GenServer.start_link __MODULE__, :ok, name: via(name)
+    GenServer.start_link(__MODULE__, :ok, name: name)
   end
-
-  def via(name),
-    do: {:global, name}
 
   def init(:ok), do: {:ok, 0}
 
-  def incr(name) do
-    GenServer.call(via(name),:incr)
+  def incr(pid) do
+    GenServer.call(pid, :incr)
   end
 
-  def get(name),
-    do: GenServer.call(via(name),:get)
-
+  def get(pid),
+    do: GenServer.call(pid, :get)
 
   def handle_call(:incr, _from, count) do
     incr_count = count + 1
@@ -25,5 +21,4 @@ defmodule HttpCounter.Counter do
 
   def handle_call(:get, _from, count),
     do: {:reply, count, count}
-
 end

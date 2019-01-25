@@ -10,7 +10,9 @@ use Mix.Config
 
 # You can configure your application as:
 #
-#     config :http_counter, key: :value
+config :http_counter,
+  max_counters: (System.get_env("MAX_COUNTERS") || "1") |> String.to_integer()
+
 #
 # and access this configuration in your application as:
 #

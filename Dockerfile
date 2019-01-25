@@ -1,6 +1,11 @@
-FROM elixir:1.8.0-alpine
+FROM elixir:1.8.0
+
+
+RUN apt-get update -y && \
+	apt-get install -y wrk htop
 
 WORKDIR /app
+
 
 ADD ./config /app/config
 ADD ./lib /app/lib
@@ -10,9 +15,10 @@ ADD ./mix.lock /app/mix.lock
 
 RUN mix local.hex --force && \
     mix local.rebar --force && \
-    mix deps.get && \
-    mix compile
+    mix do deps.get, deps.compile, compile
 
 ENV PORT 4000 
 
-CMD ["iex","--sname","counter","--cookie","secret_cookie","-S","mix"]
+ENV MAX_COUNTERS 1
+
+CMD ["elixir","-pa","_build/prod/consolidated","-S","mix"]
